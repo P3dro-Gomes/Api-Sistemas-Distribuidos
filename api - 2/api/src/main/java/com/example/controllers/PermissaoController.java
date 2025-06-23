@@ -30,8 +30,8 @@ public class PermissaoController {
 
         return Response.ok().entity(
                 temPermissao
-                    ? "Usuário tem permissão"
-                    : "Usuário NÃO tem permissão"
+                    ? "Usuario tem permissao"
+                    : "Usuario NÃO tem permissao"
         ).build();
     }
 

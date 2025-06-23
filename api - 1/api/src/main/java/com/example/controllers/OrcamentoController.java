@@ -1,6 +1,10 @@
 package com.example.controllers;
 
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import com.example.models.Orcamento;
@@ -34,11 +38,16 @@ public class OrcamentoController {
     @GET
     @Path("/{area}")
     public Orcamento buscarPorArea(@PathParam("area") String area) {
+      
         return orcamentoService.buscarPorArea(area);
     }
 
     @POST
-    public Response criarOrcamento(Orcamento orcamento) {
+    public Response criarOrcamento(Orcamento orcamento) throws Exception{
+        if(!this.permitirUsuario(orcamento.getSolicitante())){
+            return Response.status(Response.Status.FORBIDDEN).entity("\"error\": \"usuario sem permissao para criar orçamento!\"").build();
+        }
+
         Orcamento criado = orcamentoService.criarOrcamento(orcamento);
         return Response.status(Response.Status.CREATED).entity(criado).build();
     }
@@ -67,4 +76,19 @@ public class OrcamentoController {
         orcamentoService.removerOrcamento(area);
         return Response.noContent().build();
     }
+
+    public boolean permitirUsuario(String solicitante) throws Exception {
+        HttpClient client = HttpClient.newHttpClient(); 
+        String url = "http://localhost:7074/permissoes/verificar?permissao="+"GERENCIAR_ORCAMENTO"+"&usuario="+solicitante;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        return response.body().equals("Usuario tem permissao");
+        
+    }
+
 }
