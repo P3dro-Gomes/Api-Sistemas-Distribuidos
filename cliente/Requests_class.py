@@ -12,7 +12,7 @@ class RequestsClass:
 
     def post_orcamento(self, solicitante:str):
         area = input("Digite a area: ")
-        saldoDisponivel = int(input("Digite o saldo: "))
+        saldoDisponivel = input("Digite o saldo: ")
         
         url = self.dominio + "/orcamento"
         body = {
@@ -20,7 +20,7 @@ class RequestsClass:
             "saldoDisponivel" : saldoDisponivel,
             "solicitante" : solicitante
             }
-        response = requests.post(self, url, json= body)
+        response = requests.post( url, json= body)
 
         return response.json()
 
