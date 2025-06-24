@@ -40,19 +40,19 @@ class RequestsClass:
 
     def put_orcamento_adicionar(self):
         area = input("Digite a area: ")
-        valor = input("Digite o valor: ")
+        valor = int(input("Digite o valor: "))
         
         url = self.dominio + f"/orcamento/{area}/adicionar"
-        response = requests.put(url, body= valor )
+        response = requests.put(url, json= valor )
         
         return response.json()
 
     def put_orcamento_atualizar_saldo(self):
         area = input("Digite a area: ")
-        valor = input("Digite o valor: ")
+        valor = int(input("Digite o valor: "))
         
         url = self.dominio + f"/orcamento/{area}/saldo"
-        response = requests.put(url, body= valor )  
+        response = requests.put(url, json= valor )  
         
         return response.json() 
 

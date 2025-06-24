@@ -3,7 +3,7 @@ import subprocess
 import time 
 
 cmd1 = subprocess.Popen('start cmd /k "cd C:\\API - Romulo\\Api-Sistemas-Distribuidos\\api - 1\\api && mvn quarkus:dev"', shell=True)
-
+time.sleep(5)
 cmd2 = subprocess.Popen('start cmd /k "cd C:\\API - Romulo\\Api-Sistemas-Distribuidos\\api - 2\\api && mvn quarkus:dev"', shell=True)
 
 time.sleep(60)
